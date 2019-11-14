@@ -17,3 +17,5 @@ var friend = {
         1
       ]
   }
+
+  module.exports = userArray;
