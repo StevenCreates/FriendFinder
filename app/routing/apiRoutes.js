@@ -1,16 +1,50 @@
-const express = require("express");
-const handlebr = require("handlebars");
-const app = express();
+var userData = require("../data/friends");
 
-app.all('/',(req, res)=>{
 
-    res.send('<h1>this is a test</h1>')
-});
+module.exports = function(app)
+{
+    app.get("/api/friends", function(req, res)
+    {
+        res.json(userData);
+    });
 
-app.use(express.static('public'))
+    app.post("/api/friends", function(req, res)
+    {
+        let bestMatchDiff = 10000;
+        let bestMatchIndex = 0;
 
-// app.get('/',(req, res)=>{
+        for (let i = 0; i < userData.length; i++)
+        {
+            //console.log(userData);
+            let scoreDiff = 0;
 
-// });
+            for (let j = 0; j < userData[i].scores.length; j++)
+            {
+                scoreDiff += Math.abs(userData[i].scores[j]-req.body.scores[j]);
+                console.log(scoreDiff);
+            }
 
-app.listen(3000);
+            if (scoreDiff < bestMatchDiff)
+            {
+                bestMatchDiff = scoreDiff;
+                bestMatchIndex = i;
+            }
+        }
+
+        console.log(userData[bestMatchIndex]);
+
+        userData.push(req.body);
+        res.json(userData[bestMatchIndex]);
+    });
+
+    app.get("/api/clear", function(req, res)
+    {
+      while (userData.length !== 1)
+      {
+        userData.pop();
+      }
+      
+      //res.json({ ok: true });
+      res.redirect("/");
+    });
+};
