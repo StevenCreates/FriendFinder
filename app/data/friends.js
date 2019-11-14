@@ -1,21 +1,23 @@
+  
+var userArray =
+[
+    {
+        userName: "Pathfinder",
+        photo:"https://i.redd.it/giuswaoms6k21.png",
+        scores:
+        [
+            5,
+            1,
+            4,
+            4,
+            5,
+            1,
+            2,
+            5,
+            4,
+            1
+        ]
+    }
+]
 
-var friends = [""];
-
-var friend = {
-    "name": name,
-    "photo":picture,
-    "scores":[
-        5,
-        1,
-        4,
-        4,
-        5,
-        1,
-        2,
-        5,
-        4,
-        1
-      ]
-  }
-
-  module.exports = userArray;
+module.exports = userArray;
